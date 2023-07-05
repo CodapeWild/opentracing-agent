@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package opentracing.v1;
+
+option go_package = "github.com/CodapeWild/opentracing-agent/network";
+
+message Numeric {
+  oneof Numeric {
+    uint32 UINT32 = 1;
+    int32 INT32 = 2;
+    uint64 UINT64 = 3;
+    int64 INT64 = 4;
+    float FLOAT32 = 5;
+    double FLOAT64 = 6;
+  }
+}
+
+message String {
+  oneof String {
+    string STRING = 1;
+    bytes BYTES = 2;
+  }
+}
+
+message Response {
+  int32 Status = 1;
+  string Message = 2;
+  bytes Payload = 3;
+}

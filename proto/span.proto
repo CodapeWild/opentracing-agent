@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package opentracing.v1;
+
+option go_package = "github.com/CodapeWild/opentracing-agent/network";
+
+import "proto/common.proto";
+
+enum SpanLocation {
+  Unknown = 0;
+  Entry = 1;
+  Local = 2;
+  Exit = 3;
+}
+
+enum SpanStatus {
+  Undefined = 0;
+  OK = 1;
+  Error = 2;
+  Recover = 3;
+  Fatal = 4;
+}
+
+message Span {
+  uint64 TraceID = 1;
+  uint64 ParentID = 2;
+  uint64 SpanID = 3;
+  string Service = 4;
+  string Resource = 5;
+  string Operation = 6;
+  SpanLocation Location = 7;
+  SpanStatus Status = 8;
+  map<string, string> Meta = 9;
+  map<string, Numeric> Metrics = 10;
+  uint64 Start = 11;
+  uint64 Duration = 12;
+}
+
+message Trace {
+  repeated Span Trace = 1;
+}
+
+service TracesReportService {
+  rpc SendTrace(stream Trace) returns (Response) {}
+  rpc SendSpan(Span) returns (Response) {}
+}
