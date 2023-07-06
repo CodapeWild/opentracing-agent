@@ -1,0 +1,97 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "opentracing-agent HTTP APIs",
+    "version": "1.0",
+    "description": "HTTP APIs IDL file for opentracing-agent.",
+    "license": { "name": "MIT" }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:65501/v1",
+      "description": "Local testing HTTP server"
+    }
+  ],
+  "paths": {
+    "/trace": {
+      "post": {
+        "description": "Send trace data to opentracing-agent.",
+        "operationId": "SendTrace",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-protobuf": {
+              "schema": { "$ref": "../proto/span.proto#/Trace" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Trace data receiving successfully.",
+            "content": {
+              "application/x-protobuf": {
+                "schema": { "$ref": "../proto/common.proto#/Response" }
+              }
+            }
+          },
+          "400": {
+            "description": "Send trace data with client error",
+            "content": {
+              "application/x-protobuf": {
+                "schema": { "$ref": "../proto/common.proto#/Response" }
+              }
+            }
+          },
+          "500": {
+            "description": "Receive trace data with server error.",
+            "content": {
+              "application/x-protobuf": {
+                "schema": { "$ref": "../proto/common.proto#/Response" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/span": {
+      "post": {
+        "description": "Send span data to opentracing-agent",
+        "operationId": "SendSpan",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-protobuf": {
+              "schema": { "$ref": "../proto/span.proto#/Span" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Span data receiving successfully.",
+            "content": {
+              "application/x-protobuf": {
+                "schema": { "$ref": "../proto/common.proto#/Response" }
+              }
+            }
+          },
+          "400": {
+            "description": "Send span data with client error",
+            "content": {
+              "application/x-protobuf": {
+                "schema": { "$ref": "../proto/common.proto#/Response" }
+              }
+            }
+          },
+          "500": {
+            "description": "Receive span data with server error.",
+            "content": {
+              "application/x-protobuf": {
+                "schema": { "$ref": "../proto/common.proto#/Response" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

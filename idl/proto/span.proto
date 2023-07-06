@@ -4,7 +4,7 @@ package opentracing.v1;
 
 option go_package = "github.com/CodapeWild/opentracing-agent/network";
 
-import "proto/common.proto";
+import "idl/proto/common.proto";
 
 enum SpanLocation {
   Unknown = 0;
@@ -34,6 +34,7 @@ message Span {
   map<string, Numeric> Metrics = 10;
   uint64 Start = 11;
   uint64 Duration = 12;
+  SpanVendor Source = 13;
 }
 
 message Trace {

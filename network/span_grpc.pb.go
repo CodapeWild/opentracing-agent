@@ -164,5 +164,5 @@ var _TracesReportService_serviceDesc = grpc.ServiceDesc{
 			ClientStreams: true,
 		},
 	},
-	Metadata: "proto/span.proto",
+	Metadata: "idl/proto/span.proto",
 }

@@ -22,6 +22,19 @@ message String {
   }
 }
 
+message SpanVendor {
+  oneof SpanVendor {
+    string DataDog = 1;
+    string Jaeger = 2;
+    string OpenTelemetry = 3;
+    string Pinpoint = 4;
+    string SkyWalking = 5;
+    string Zipkin = 6;
+    string OpenTracingeBPF = 7;
+    string OpenTracingGo = 8;
+  }
+}
+
 message Response {
   int32 Status = 1;
   string Message = 2;

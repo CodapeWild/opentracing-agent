@@ -1,6 +1,10 @@
+## Prerequisites for compile this repo from source
+# install golang
+# install protoc
+# intall go-swagger
 
 protoc        := $(shell which protoc)
-proto_dir     := ./proto
+proto_dir     := ./idl/proto
 proto_files   = $(wildcard ${proto_dir}/*.proto)
 proto_out     := ${GOPATH}/src
 
