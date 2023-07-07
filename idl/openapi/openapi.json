@@ -21,9 +21,7 @@
           "required": true,
           "content": {
             "application/x-protobuf": {
-              "schema": {
-                "$ref": "https://raw.githubusercontent.com/CodapeWild/opentracing-agent/main/idl/proto/span.proto#/Trace"
-              }
+              "schema": { "$ref": "span.proto#/Trace" }
             }
           }
         },
@@ -32,9 +30,7 @@
             "description": "Trace data receiving successfully.",
             "content": {
               "application/x-protobuf": {
-                "schema": {
-                  "$ref": "https://raw.githubusercontent.com/CodapeWild/opentracing-agent/main/idl/proto/common.proto#/Response"
-                }
+                "schema": { "$ref": "common.proto#/Response" }
               }
             }
           },
@@ -42,9 +38,7 @@
             "description": "Send trace data with client error",
             "content": {
               "application/x-protobuf": {
-                "schema": {
-                  "$ref": "https://raw.githubusercontent.com/CodapeWild/opentracing-agent/main/idl/proto/common.proto#/Response"
-                }
+                "schema": { "$ref": "common.proto#/Response" }
               }
             }
           },
@@ -52,9 +46,7 @@
             "description": "Receive trace data with server error.",
             "content": {
               "application/x-protobuf": {
-                "schema": {
-                  "$ref": "https://raw.githubusercontent.com/CodapeWild/opentracing-agent/main/idl/proto/common.proto#/Response"
-                }
+                "schema": { "$ref": "common.proto#/Response" }
               }
             }
           }
@@ -69,9 +61,7 @@
           "required": true,
           "content": {
             "application/x-protobuf": {
-              "schema": {
-                "$ref": "https://raw.githubusercontent.com/CodapeWild/opentracing-agent/main/idl/proto/span.proto#/Span"
-              }
+              "schema": { "$ref": "span.proto#/Span" }
             }
           }
         },
@@ -80,9 +70,7 @@
             "description": "Span data receiving successfully.",
             "content": {
               "application/x-protobuf": {
-                "schema": {
-                  "$ref": "https://raw.githubusercontent.com/CodapeWild/opentracing-agent/main/idl/proto/common.proto#/Response"
-                }
+                "schema": { "$ref": "common.proto#/Response" }
               }
             }
           },
@@ -90,9 +78,7 @@
             "description": "Send span data with client error",
             "content": {
               "application/x-protobuf": {
-                "schema": {
-                  "$ref": "https://raw.githubusercontent.com/CodapeWild/opentracing-agent/main/idl/proto/common.proto#/Response"
-                }
+                "schema": { "$ref": "common.proto#/Response" }
               }
             }
           },
@@ -100,9 +86,7 @@
             "description": "Receive span data with server error.",
             "content": {
               "application/x-protobuf": {
-                "schema": {
-                  "$ref": "https://raw.githubusercontent.com/CodapeWild/opentracing-agent/main/idl/proto/common.proto#/Response"
-                }
+                "schema": { "$ref": "common.proto#/Response" }
               }
             }
           }

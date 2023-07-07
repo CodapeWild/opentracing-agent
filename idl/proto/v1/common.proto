@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package opentracing.v1;
 
-option go_package = "github.com/CodapeWild/opentracing-agent/network";
+option go_package = "github.com/CodapeWild/opentracing-agent/network/v1";
 
 message Numeric {
   oneof Numeric {

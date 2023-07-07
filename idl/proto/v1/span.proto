@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package opentracing.v1;
 
-option go_package = "github.com/CodapeWild/opentracing-agent/network";
+option go_package = "github.com/CodapeWild/opentracing-agent/network/v1";
 
-import "idl/proto/common.proto";
+import "idl/proto/v1/common.proto";
 
 enum SpanLocation {
   Unknown = 0;

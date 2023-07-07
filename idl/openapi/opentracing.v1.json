@@ -1,0 +1,375 @@
+{
+  "openapi": "3.0.1",
+  "components": {
+    "schemas": {
+      "opentracing.v1.Numeric": {
+        "properties": {
+          "FLOAT32": {
+            "type": "number"
+          },
+          "FLOAT64": {
+            "type": "number"
+          },
+          "INT32": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "INT64": {
+            "format": "int64",
+            "type": "integer",
+            "x-kubernetes-int-or-string": true
+          },
+          "UINT32": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "UINT64": {
+            "format": "int64",
+            "type": "integer",
+            "x-kubernetes-int-or-string": true
+          }
+        },
+        "type": "object"
+      },
+      "opentracing.v1.Response": {
+        "properties": {
+          "Message": {
+            "type": "string"
+          },
+          "Payload": {
+            "format": "byte",
+            "type": "string"
+          },
+          "Status": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "opentracing.v1.Span": {
+        "properties": {
+          "Duration": {
+            "format": "int64",
+            "type": "integer",
+            "x-kubernetes-int-or-string": true
+          },
+          "Location": {
+            "enum": [
+              "Unknown",
+              "Entry",
+              "Local",
+              "Exit"
+            ],
+            "type": "string"
+          },
+          "Meta": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "Metrics": {
+            "additionalProperties": {
+              "properties": {
+                "FLOAT32": {
+                  "type": "number"
+                },
+                "FLOAT64": {
+                  "type": "number"
+                },
+                "INT32": {
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "INT64": {
+                  "format": "int64",
+                  "type": "integer",
+                  "x-kubernetes-int-or-string": true
+                },
+                "UINT32": {
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "UINT64": {
+                  "format": "int64",
+                  "type": "integer",
+                  "x-kubernetes-int-or-string": true
+                }
+              },
+              "type": "object"
+            },
+            "type": "object"
+          },
+          "Operation": {
+            "type": "string"
+          },
+          "ParentID": {
+            "format": "int64",
+            "type": "integer",
+            "x-kubernetes-int-or-string": true
+          },
+          "Resource": {
+            "type": "string"
+          },
+          "Service": {
+            "type": "string"
+          },
+          "Source": {
+            "properties": {
+              "DataDog": {
+                "type": "string"
+              },
+              "Jaeger": {
+                "type": "string"
+              },
+              "OpenTelemetry": {
+                "type": "string"
+              },
+              "OpenTracingGo": {
+                "type": "string"
+              },
+              "OpenTracingeBPF": {
+                "type": "string"
+              },
+              "Pinpoint": {
+                "type": "string"
+              },
+              "SkyWalking": {
+                "type": "string"
+              },
+              "Zipkin": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "SpanID": {
+            "format": "int64",
+            "type": "integer",
+            "x-kubernetes-int-or-string": true
+          },
+          "Start": {
+            "format": "int64",
+            "type": "integer",
+            "x-kubernetes-int-or-string": true
+          },
+          "Status": {
+            "enum": [
+              "Undefined",
+              "OK",
+              "Error",
+              "Recover",
+              "Fatal"
+            ],
+            "type": "string"
+          },
+          "TraceID": {
+            "format": "int64",
+            "type": "integer",
+            "x-kubernetes-int-or-string": true
+          }
+        },
+        "type": "object"
+      },
+      "opentracing.v1.SpanLocation": {
+        "enum": [
+          "Unknown",
+          "Entry",
+          "Local",
+          "Exit"
+        ],
+        "type": "string"
+      },
+      "opentracing.v1.SpanStatus": {
+        "enum": [
+          "Undefined",
+          "OK",
+          "Error",
+          "Recover",
+          "Fatal"
+        ],
+        "type": "string"
+      },
+      "opentracing.v1.SpanVendor": {
+        "properties": {
+          "DataDog": {
+            "type": "string"
+          },
+          "Jaeger": {
+            "type": "string"
+          },
+          "OpenTelemetry": {
+            "type": "string"
+          },
+          "OpenTracingGo": {
+            "type": "string"
+          },
+          "OpenTracingeBPF": {
+            "type": "string"
+          },
+          "Pinpoint": {
+            "type": "string"
+          },
+          "SkyWalking": {
+            "type": "string"
+          },
+          "Zipkin": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "opentracing.v1.String": {
+        "properties": {
+          "BYTES": {
+            "format": "byte",
+            "type": "string"
+          },
+          "STRING": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "opentracing.v1.Trace": {
+        "properties": {
+          "Trace": {
+            "items": {
+              "properties": {
+                "Duration": {
+                  "format": "int64",
+                  "type": "integer",
+                  "x-kubernetes-int-or-string": true
+                },
+                "Location": {
+                  "enum": [
+                    "Unknown",
+                    "Entry",
+                    "Local",
+                    "Exit"
+                  ],
+                  "type": "string"
+                },
+                "Meta": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "Metrics": {
+                  "additionalProperties": {
+                    "properties": {
+                      "FLOAT32": {
+                        "type": "number"
+                      },
+                      "FLOAT64": {
+                        "type": "number"
+                      },
+                      "INT32": {
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "INT64": {
+                        "format": "int64",
+                        "type": "integer",
+                        "x-kubernetes-int-or-string": true
+                      },
+                      "UINT32": {
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "UINT64": {
+                        "format": "int64",
+                        "type": "integer",
+                        "x-kubernetes-int-or-string": true
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "object"
+                },
+                "Operation": {
+                  "type": "string"
+                },
+                "ParentID": {
+                  "format": "int64",
+                  "type": "integer",
+                  "x-kubernetes-int-or-string": true
+                },
+                "Resource": {
+                  "type": "string"
+                },
+                "Service": {
+                  "type": "string"
+                },
+                "Source": {
+                  "properties": {
+                    "DataDog": {
+                      "type": "string"
+                    },
+                    "Jaeger": {
+                      "type": "string"
+                    },
+                    "OpenTelemetry": {
+                      "type": "string"
+                    },
+                    "OpenTracingGo": {
+                      "type": "string"
+                    },
+                    "OpenTracingeBPF": {
+                      "type": "string"
+                    },
+                    "Pinpoint": {
+                      "type": "string"
+                    },
+                    "SkyWalking": {
+                      "type": "string"
+                    },
+                    "Zipkin": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SpanID": {
+                  "format": "int64",
+                  "type": "integer",
+                  "x-kubernetes-int-or-string": true
+                },
+                "Start": {
+                  "format": "int64",
+                  "type": "integer",
+                  "x-kubernetes-int-or-string": true
+                },
+                "Status": {
+                  "enum": [
+                    "Undefined",
+                    "OK",
+                    "Error",
+                    "Recover",
+                    "Fatal"
+                  ],
+                  "type": "string"
+                },
+                "TraceID": {
+                  "format": "int64",
+                  "type": "integer",
+                  "x-kubernetes-int-or-string": true
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "OpenAPI Spec for Solo APIs.",
+    "version": "v1"
+  },
+  "paths": null
+}

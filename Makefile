@@ -4,10 +4,12 @@
 # intall go-swagger
 
 protoc        := $(shell which protoc)
-proto_dir     := ./idl/proto
+proto_version := v1
+proto_dir     := ./idl/proto/${proto_version}
 proto_files   = $(wildcard ${proto_dir}/*.proto)
 proto_out     := ${GOPATH}/src
 
 .PHONY: gen-network
 gen-network:
-	${protoc} --proto_path=. --go_opt=paths=import --go_out=${proto_out} --go-grpc_out=${proto_out} ${proto_files}
+	${protoc} ${proto_files} --proto_path=. --go_opt=paths=import --go_out=${proto_out} --go-grpc_out=${proto_out}
+	@echo generate network ok
