@@ -16,19 +16,3 @@
  */
 
 package main
-
-import (
-	"net/http"
-
-	dkhttp "github.com/CodapeWild/devkit/net/http"
-)
-
-var (
-	http200 = dkhttp.NewJSONRespMessage(http.StatusOK, dkhttp.JSONRespMsgWithVersion(v1))
-	http400 = dkhttp.NewJSONRespMessage(http.StatusBadRequest, dkhttp.JSONRespMsgWithVersion(v1))
-	http500 = dkhttp.NewJSONRespMessage(http.StatusInternalServerError, dkhttp.JSONRespMsgWithVersion(v1))
-)
-
-func checkHeadersFailed(resp http.ResponseWriter, req *http.Request) {
-	dkhttp.NewJSONRespMessage(http.StatusBadRequest, dkhttp.JSONRespMsgWithMessage("invalid HTTP request headers")).WriteBy(resp)
-}
