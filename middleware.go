@@ -17,21 +17,12 @@
 
 package main
 
-import "net/http"
+import (
+	"net/http"
 
-var pattern = map[string]http.HandlerFunc{
-	"/v1/trace": handleTrace(v1),
-	"/v1/span":  handleSpan(v1),
-}
+	dkhttp "github.com/CodapeWild/devkit/net/http"
+)
 
-func handleTrace(version string) http.HandlerFunc {
-	return func(resp http.ResponseWriter, req *http.Request) {
-
-	}
-}
-
-func handleSpan(version string) http.HandlerFunc {
-	return func(resp http.ResponseWriter, req *http.Request) {
-
-	}
+func checkHeadersFailed(resp http.ResponseWriter, req *http.Request) {
+	dkhttp.NewJSONRespMessage(http.StatusBadRequest, dkhttp.JSONRespMsgWithMessage("invalid HTTP request headers")).WriteBy(resp)
 }
