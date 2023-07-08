@@ -4,13 +4,13 @@ go 1.18
 
 require (
 	github.com/CodapeWild/devkit v0.0.0-20230708131934-3648eed2d8fb
+	github.com/spf13/cobra v1.7.0
 	google.golang.org/grpc v1.56.2
 	google.golang.org/protobuf v1.31.0
 )
 
 require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-	github.com/spf13/cobra v1.7.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 )
 

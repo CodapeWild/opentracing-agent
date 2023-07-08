@@ -1,7 +1,5 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/CodapeWild/devkit v0.0.0-20230708102408-a91521b21999 h1:i7YLChjsBZuCmZGtAu82ozgsycDcdPY9kiqwoduuRZQ=
-github.com/CodapeWild/devkit v0.0.0-20230708102408-a91521b21999/go.mod h1:Z4DaPeGvZcby5b4QKBo1WCsOQGQ03bJdWoZyOk6t3Rg=
 github.com/CodapeWild/devkit v0.0.0-20230708131934-3648eed2d8fb h1:TyGPyfQhLkUFMcN133xrwKjnbbApUMURGMyKCcKk4rA=
 github.com/CodapeWild/devkit v0.0.0-20230708131934-3648eed2d8fb/go.mod h1:Z4DaPeGvZcby5b4QKBo1WCsOQGQ03bJdWoZyOk6t3Rg=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
