@@ -21,6 +21,13 @@ enum SpanStatus {
   Fatal = 4;
 }
 
+enum SamplePriority {
+  AutoKeep = 0;
+  AutoReject = 1;
+  UserKeep = 2;
+  UserReject = 3;
+}
+
 message Span {
   uint64 TraceID = 1;
   uint64 ParentID = 2;
@@ -34,7 +41,8 @@ message Span {
   map<string, Numeric> Metrics = 10;
   uint64 Start = 11;
   uint64 Duration = 12;
-  SpanVendor Source = 13;
+  SamplePriority SamplePriority = 13;
+  SpanVendor Source = 14;
 }
 
 message Trace {

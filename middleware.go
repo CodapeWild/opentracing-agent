@@ -36,6 +36,16 @@ func checkHeadersFailed(resp http.ResponseWriter, req *http.Request) {
 }
 
 // For gRPC status
+const (
+	gRPCStatusOK    = 1000
+	gRPCStatusError = 2000
+)
+
+var (
+	grpc_ok    = NewCommonResponse(CommonRespWithStatus(gRPCStatusOK), CommonRespWithVersion(v1))
+	grpc_error = NewCommonResponse(CommonRespWithStatus(gRPCStatusError), CommonRespWithVersion(v1))
+)
+
 type CommonRespOption func(cresp *CommonResponse)
 
 func CommonRespWithStatus(status int) CommonRespOption {
@@ -77,13 +87,3 @@ func NewCommonResponse(opts ...CommonRespOption) *CommonResponse {
 
 	return cresp
 }
-
-const (
-	gRPCStatusOK    = 1000
-	gRPCStatusError = 2000
-)
-
-var (
-	grpc_ok    = NewCommonResponse(CommonRespWithStatus(gRPCStatusOK), CommonRespWithVersion(v1))
-	grpc_error = NewCommonResponse(CommonRespWithStatus(gRPCStatusError), CommonRespWithVersion(v1))
-)
