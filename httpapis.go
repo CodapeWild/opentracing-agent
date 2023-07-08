@@ -46,7 +46,8 @@ func handleTrace(version string) http.HandlerFunc {
 
 				return
 			}
-			// todo: send trace to native datacenter
+
+			// todo: send trace to io
 
 			http200.WriteBy(resp)
 		})
@@ -64,7 +65,8 @@ func handleSpan(version string) http.HandlerFunc {
 
 				return
 			}
-			// todo: send span to native datacenter
+
+			// todo: send span to io
 
 			http200.WriteBy(resp)
 		})

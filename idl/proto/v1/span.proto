@@ -43,5 +43,5 @@ message Trace {
 
 service TracesReportService {
   rpc SendTrace(stream Trace) returns (Response) {}
-  rpc SendSpan(Span) returns (Response) {}
+  rpc SendSpan(stream Span) returns (Response) {}
 }

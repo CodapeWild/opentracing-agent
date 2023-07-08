@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TracesReportServiceClient interface {
 	SendTrace(ctx context.Context, opts ...grpc.CallOption) (TracesReportService_SendTraceClient, error)
-	SendSpan(ctx context.Context, in *Span, opts ...grpc.CallOption) (*Response, error)
+	SendSpan(ctx context.Context, opts ...grpc.CallOption) (TracesReportService_SendSpanClient, error)
 }
 
 type tracesReportServiceClient struct {
@@ -63,13 +63,38 @@ func (x *tracesReportServiceSendTraceClient) CloseAndRecv() (*Response, error) {
 	return m, nil
 }
 
-func (c *tracesReportServiceClient) SendSpan(ctx context.Context, in *Span, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
-	err := c.cc.Invoke(ctx, "/opentracing.v1.TracesReportService/SendSpan", in, out, opts...)
+func (c *tracesReportServiceClient) SendSpan(ctx context.Context, opts ...grpc.CallOption) (TracesReportService_SendSpanClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_TracesReportService_serviceDesc.Streams[1], "/opentracing.v1.TracesReportService/SendSpan", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &tracesReportServiceSendSpanClient{stream}
+	return x, nil
+}
+
+type TracesReportService_SendSpanClient interface {
+	Send(*Span) error
+	CloseAndRecv() (*Response, error)
+	grpc.ClientStream
+}
+
+type tracesReportServiceSendSpanClient struct {
+	grpc.ClientStream
+}
+
+func (x *tracesReportServiceSendSpanClient) Send(m *Span) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *tracesReportServiceSendSpanClient) CloseAndRecv() (*Response, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(Response)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 // TracesReportServiceServer is the server API for TracesReportService service.
@@ -77,7 +102,7 @@ func (c *tracesReportServiceClient) SendSpan(ctx context.Context, in *Span, opts
 // for forward compatibility
 type TracesReportServiceServer interface {
 	SendTrace(TracesReportService_SendTraceServer) error
-	SendSpan(context.Context, *Span) (*Response, error)
+	SendSpan(TracesReportService_SendSpanServer) error
 	mustEmbedUnimplementedTracesReportServiceServer()
 }
 
@@ -88,8 +113,8 @@ type UnimplementedTracesReportServiceServer struct {
 func (UnimplementedTracesReportServiceServer) SendTrace(TracesReportService_SendTraceServer) error {
 	return status.Errorf(codes.Unimplemented, "method SendTrace not implemented")
 }
-func (UnimplementedTracesReportServiceServer) SendSpan(context.Context, *Span) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendSpan not implemented")
+func (UnimplementedTracesReportServiceServer) SendSpan(TracesReportService_SendSpanServer) error {
+	return status.Errorf(codes.Unimplemented, "method SendSpan not implemented")
 }
 func (UnimplementedTracesReportServiceServer) mustEmbedUnimplementedTracesReportServiceServer() {}
 
@@ -130,37 +155,45 @@ func (x *tracesReportServiceSendTraceServer) Recv() (*Trace, error) {
 	return m, nil
 }
 
-func _TracesReportService_SendSpan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Span)
-	if err := dec(in); err != nil {
+func _TracesReportService_SendSpan_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(TracesReportServiceServer).SendSpan(&tracesReportServiceSendSpanServer{stream})
+}
+
+type TracesReportService_SendSpanServer interface {
+	SendAndClose(*Response) error
+	Recv() (*Span, error)
+	grpc.ServerStream
+}
+
+type tracesReportServiceSendSpanServer struct {
+	grpc.ServerStream
+}
+
+func (x *tracesReportServiceSendSpanServer) SendAndClose(m *Response) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *tracesReportServiceSendSpanServer) Recv() (*Span, error) {
+	m := new(Span)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(TracesReportServiceServer).SendSpan(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/opentracing.v1.TracesReportService/SendSpan",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TracesReportServiceServer).SendSpan(ctx, req.(*Span))
-	}
-	return interceptor(ctx, in, info, handler)
+	return m, nil
 }
 
 var _TracesReportService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "opentracing.v1.TracesReportService",
 	HandlerType: (*TracesReportServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "SendSpan",
-			Handler:    _TracesReportService_SendSpan_Handler,
-		},
-	},
+	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "SendTrace",
 			Handler:       _TracesReportService_SendTrace_Handler,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "SendSpan",
+			Handler:       _TracesReportService_SendSpan_Handler,
 			ClientStreams: true,
 		},
 	},
