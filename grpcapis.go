@@ -18,6 +18,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"io"
 	"time"
@@ -25,6 +26,7 @@ import (
 	dkio "github.com/CodapeWild/devkit/io"
 	networkv1 "github.com/CodapeWild/opentracing-agent/network/v1"
 	"github.com/google/martian/v3/log"
+	"google.golang.org/protobuf/proto"
 )
 
 type TraceService struct {
@@ -50,25 +52,24 @@ func (ts *TraceService) SendTrace(src networkv1.TracesReportService_SendTraceSer
 
 func (ts *TraceService) SendSpan(src networkv1.TracesReportService_SendSpanServer) error {
 	spanCollector := dkio.NewCacheAndFlush(100, 5*time.Second)
-	spanCollector.Subscribe(func(data any) {
-		set, ok := data.([]any)
-		if !ok {
-			log.Debugf("type assertion failed want []any get %T", data)
-
-			return
-		}
-
-		var trace = &networkv1.Trace{Trace: make([]*networkv1.Span, len(set))}
-		for i := range set {
-			span, ok := set[i].(*networkv1.Span)
+	spanCollector.SubscribeBatch(context.Background(), func(batch []proto.Message) *dkio.IOResponse {
+		var trace = &networkv1.Trace{Trace: make([]*networkv1.Span, len(batch))}
+		for i := range batch {
+			msg, ok := batch[i].(*dkio.IOMessageNative)
 			if !ok {
-				log.Debugf("type assertion failed want span get %T", set[i])
+				log.Debugf("type assertion failed want *IOMessageNative get %T", batch[i])
 				break
+			}
+			span, ok := msg.Payload.(*networkv1.Span)
+			if !ok {
+				log.Debugf("type assertion failed want *Span get %T", msg.Payload)
 			}
 			trace.Trace[i] = span
 		}
 
 		// todo: send trace to io
+
+		return nil
 	})
 	spanCollector.Start()
 	defer spanCollector.Close()
@@ -85,6 +86,15 @@ func (ts *TraceService) SendSpan(src networkv1.TracesReportService_SendSpanServe
 			continue
 		}
 
-		spanCollector.Publish(span)
+		ctx, _ := context.WithTimeout(context.Background(), 100*time.Millisecond)
+		ioresp, err := spanCollector.Publish(ctx, &dkio.IOMessageNative{
+			IOMessage: dkio.IOMessage{DataType: "network_v1_span"},
+			Payload:   span,
+		})
+		if err != nil {
+			log.Debugf("cache span failed with resp:%v and err:%s", *ioresp, err.Error())
+
+			return err
+		}
 	}
 }
