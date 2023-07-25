@@ -3,7 +3,7 @@ module github.com/CodapeWild/opentracing-agent
 go 1.18
 
 require (
-	github.com/CodapeWild/devkit v0.0.0-20230718104004-53296acb50b5
+	github.com/CodapeWild/devkit v0.0.0-20230725030615-44b307652c1b
 	github.com/spf13/cobra v1.7.0
 	google.golang.org/grpc v1.56.2
 	google.golang.org/protobuf v1.31.0

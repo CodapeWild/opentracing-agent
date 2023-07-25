@@ -51,13 +51,13 @@ func (ts *TraceService) SendTrace(src networkv1.TracesReportService_SendTraceSer
 }
 
 func (ts *TraceService) SendSpan(src networkv1.TracesReportService_SendSpanServer) error {
-	spanCollector := dkio.NewCacheAndFlush(100, 5*time.Second)
-	spanCollector.SubscribeBatch(context.Background(), func(batch []proto.Message) *dkio.IOResponse {
-		var trace = &networkv1.Trace{Trace: make([]*networkv1.Span, len(batch))}
-		for i := range batch {
-			msg, ok := batch[i].(*dkio.IOMessageNative)
+	spanCollector := dkio.NewBufferFlush(100, 5*time.Second)
+	spanCollector.Subscribe(func(ctx context.Context, message proto.Message) *dkio.IOResponse {
+		var trace = &networkv1.Trace{Trace: make([]*networkv1.Span, len(message))}
+		for i := range message {
+			msg, ok := message[i].(*dkio.IOMessageNative)
 			if !ok {
-				log.Debugf("type assertion failed want *IOMessageNative get %T", batch[i])
+				log.Debugf("type assertion failed want *IOMessageNative get %T", message[i])
 				break
 			}
 			span, ok := msg.Payload.(*networkv1.Span)
